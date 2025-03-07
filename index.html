@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon - Mobile Phones</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f3f3f3;
+        }
+
+        header {
+            background-color: #131921;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff9900;
+            text-align: right;
+        }
+        .fit-picture {
+                   width: 140px;
+                   border-radius: 20%;
+        }
+
+        
+
+        .cart-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            background-color: #ff9900;
+            color: #131921;
+            border-radius: 50%;
+            padding: 2px 6px;
+            margin-left: 5px;
+            font-size: 14px;
+        }
+
+        
+        nav {
+            background-color: #232f3e;
+            padding: 8px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+        }
+
+        .nav-item {
+            color: white;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            gap: 20px;
+        }
+
+        
+        .filters {
+            width: 250px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .filter-section {
+            margin-bottom: 20px;
+        }
+
+        .filter-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .filter-option {
+            margin-bottom: 8px;
+        }
+
+        
+        .products {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 4px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .product-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: #B12704;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product-rating {
+            color: #ff9900;
+            margin-bottom: 10px;
+        }
+
+        .add-to-cart {
+            background-color: #ff9900;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .add-to-cart:hover {
+            background-color: #e88e00;
+        }
+
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 100;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 4px;
+        }
+
+        .close {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .cart-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-right: 15px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-total {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .checkout-button {
+            background-color: #ff9900;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+            margin-top: 10px;
+        }
+        footer {
+                text-align: center;
+             padding: 15px;
+            background: #2c3e50;
+             color: white;
+             margin-top: 20px;  
+        }
+        h2{
+            text-align: center;
+            color: #2c3e50;
+            border-radius: 20px;
+        }
+        form {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 400px;
+            margin: auto;
+        }
+        
+        form label {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        form input, form select, form button {
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            transition: 0.3s ease-in-out;
+        }
+        
+        form input:focus, form select:focus {
+            border-color: #2c3e50;
+            box-shadow: 0 0 5px rgba(44, 62, 80, 0.5);
+            outline: none;
+        }
+        
+        form button {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        form button:hover {
+            background: #34495e;
+            transform: scale(1.05);
+        }
+
+
+        
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+            }
+
+            .filters {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <h1>amazon <img 
+                     class="fit-picture"
+                    src="amazon.jpg"
+                     alt="logo of amazon " />
+
+                    
+
+
+                    </h1>
+                </div>
+        
+            <div class="cart-container" onclick="openCart()">
+                <span>Cart</span>
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-item">All</div>
+            <div class="nav-item">Mobiles</div>
+            <div class="nav-item">Best Sellers</div>
+            <div class="nav-item">Today's Deals</div>
+            <div class="nav-item">Sell</div>
+        </div>
+    </nav>
+
+    
+    <main>
+        
+        <div class="filters">
+            <div class="filter-section">
+                <div class="filter-title">Brand</div>
+                <div class="filter-option">
+                    <input type="button" id="apple"> <label for="apple">Apple</label>
+                </div>
+                <div class="filter-option">
+                    <input type="button" id="samsung"> <label for="samsung">Samsung</label>
+                </div>
+                <div class="filter-option">
+                    <input type="button" id="google"> <label for="google">Google</label>
+                </div>
+                <div class="filter-option">
+                    <input type="button" id="oneplus"> <label for="oneplus">OnePlus</label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-title">Customer Rating</div>
+                <div class="filter-option">
+                    <input type="button" id="rating4"> <label for="rating4">4★ & Up</label>
+                </div>
+                <div class="filter-option">
+                    <input type="button" id="rating3"> <label for="rating3">3★ & Up</label>
+                </div>
+                <div class="filter-option">
+                    <input type="button" id="rating2"> <label for="rating2">2★ & Up</label>
+                </div>
+                <div class="filter-option">
+                    <input type="button" id="rating1"> <label for="rating1">1★ & Up</label>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="products" id="products-container">
+            
+        </div>
+    </main>
+
+    
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCart()">&times;</span>
+            <h2>Your Cart</h2>
+            <div id="cart-items">
+                <!-- Cart items will be added dynamically -->
+            </div>
+            <div class="cart-total">Total: $<span id="cart-total">0</span></div>
+            <button class="checkout-button">Proceed to Checkout</button>
+        </div>
+    </div>
+    <section id="Sell">
+        <h2>Choose a phone to exchange</h2>
+        <form>
+            <label for="Brand">Enter Brand:</label>
+            <select id="Brand" name="Brand" required>
+                <option value="iPhone">iPhone</option>
+                <option value="Samsung">Samsung</option>
+                <option value="oneplus">OnePlus</option>
+                <option value="Google Pixel">Google Pixel</option>
+            </select>
+            
+            <label for="model">Select Model:</label>
+            <input type="text" id="model" name="model" required>
+            
+            <label for="IMEI">Enter IMEI NO:</label>
+            <input type="tel" id="IMEI" name="IMEI" required>
+            
+            <label for="ramStorage">Enter RAM and Storage:</label>
+            <select id="ramStorage" name="ramStorage" required>
+                <option value="1TB">1TB</option>
+                <option value="512GB">512GB</option>
+                <option value="128GB">128GB</option>
+            </select>
+            
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <script>
+        
+        const products = [
+            {
+                id: 1,
+                title: "Apple iPhone 15",
+                price: 80000,
+                image: "/15.jpg?height=180&width=180",
+                rating: 4.8,
+                brand: "Apple"
+            },
+            {
+                id: 2,
+                title: "Samsung Galaxy S23 Ultra",
+                price: 140000,
+                image: "/s23.jpg?height=180&width=180",
+                rating: 4.7,
+                brand: "Samsung"
+            },
+            {
+                id: 3,
+                title: "Google Pixel 7 Pro",
+                price: 45000,
+                image: "/7 pro.jpg?height=180&width=180",
+                rating: 4.6,
+                brand: "Google"
+            },
+            {
+                id: 4,
+                title: "OnePlus 13 pro",
+                price: 35000,
+                image: "/oneplus.jpg?height=180&width=180",
+                rating: 4.6,
+                brand: "OnePlus"
+            },
+            {
+                id: 5,
+                title: "Apple iPhone 14",
+                price: 70000,
+                image: "/14.jpg?height=180&width=180",
+                rating: 4.7,
+                brand: "Apple"
+            },
+            
+            
+        ];
+
+        
+        let cart = [];
+
+        
+        function displayProducts() {
+            const productsContainer = document.getElementById('products-container');
+            productsContainer.innerHTML = '';
+
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                
+                let stars = '';
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= Math.floor(product.rating)) {
+                        stars += '★';
+                    } else if (i - 0.5 <= product.rating) {
+                        stars += '½';
+                    } else {
+                        stars += '☆';
+                    }
+                }
+
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.title}" class="product-image">
+                    <div class="product-title">${product.title}</div>
+                    <div class="product-price">${product.price}</div>
+                    <div class="product-rating">${stars} (${product.rating})</div>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+                `;
+
+                productsContainer.appendChild(productCard);
+            });
+        }
+
+        
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            
+            
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: 1
+                });
+            }
+            
+            updateCartCount();
+            updateCartModal();
+        }
+
+        
+        function updateCartCount() {
+            const cartCount = document.getElementById('cart-count');
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+
+        
+        function updateCartModal() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Your cart is empty</p>';
+                cartTotal.textContent = '0';
+                return;
+            }
+            
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}" class="cart-item-image">
+                    <div class="cart-item-details">
+                        <div>${item.title}</div>
+                        <div>$${item.price} x ${item.quantity}</div>
+                        <div>Total: $${itemTotal}</div>
+                    </div>
+                    <button onclick="removeFromCart(${item.id})">Remove</button>
+                `;
+                
+                cartItems.appendChild(cartItem);
+            });
+            
+            cartTotal.textContent = total;
+        }
+
+    
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartCount();
+            updateCartModal();
+        }
+
+        
+        function openCart() {
+            const modal = document.getElementById('cart-modal');
+            modal.style.display = 'block';
+            updateCartModal();
+        }
+
+        
+        function closeCart() {
+            const modal = document.getElementById('cart-modal');
+            modal.style.display = 'none';
+        }
+
+        
+        window.onclick = function(event) {
+            const modal = document.getElementById('cart-modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        
+        displayProducts();
+        document.addEventListener("DOMContentLoaded", function () {
+        
+        const sellNavItem = document.querySelector(".nav-item:nth-child(5)");
+        if (sellNavItem) {
+            sellNavItem.addEventListener("click", function () {
+                const sellSection = document.getElementById("Sell");
+                if (sellSection) {
+                    sellSection.scrollIntoView({ behavior: "smooth" });
+                } else {
+                    console.error("Sell section not found in the document.");
+                }
+            });
+        } else {
+            console.error("Navigation item for 'Sell' not found.");
+        }
+    });
+    </script>
+    <footer>
+        @Devang Dhote
+    </footer>
+</body>
+</html>   
